@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Task</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <!-- React and ReactDOM CDN links -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <script>
+       const { useState, useEffect } = React;
+
+function OnboardingTable() {
+    // Load data from localStorage if available, else use initialData
+    const loadData = () => {
+        const savedData = localStorage.getItem('onboardingData');
+        return savedData ? JSON.parse(savedData) : [
+            { task: 'Onboarding Call', data: ['', '', '', '', ''] },
+            { task: 'Google Search Console Access', data: ['', '', '', '', ''] },
+            { task: 'Google Analytics Access', data: ['', '', '', '', ''] },
+            { task: 'Website Access', data: ['', '', '', '', ''] },
+            { task: 'Technical Audit', data: ['', '', '', '', ''] },
+            { task: 'Anchor Text and Semantic Analysis', data: ['', '', '', '', ''] },
+            { task: 'Competitor Analysis', data: ['', '', '', '', ''] },
+            { task: 'Anchor Text/URL Mapping', data: ['', '', '', '', ''] },
+            { task: 'Google Data Studio Report + Local Reporting Suite', data: ['', '', '', '', ''] },
+            { task: 'Site Level Optimization', data: ['', '', '', '', ''] },
+            { task: 'On Page Optimization', data: ['', '', '', '', ''] },
+            { task: 'Content Creation', data: ['', '', '', '', ''] },
+            { task: 'Content Publishing', data: ['', '', '', '', ''] },
+            { task: 'Premium Press Release', data: ['', '', '', '', ''] },
+            { task: 'Authority Niche Placements', data: ['', '', '', '', ''] },
+            { task: 'Review Management', data: ['', '', '', '', ''] },
+            { task: 'Index Links', data: ['', '', '', '', ''] },
+            { task: 'Video Recap', data: ['', '', '', '', ''] }
+        ];
+    };
+
+    const [tasks, setTasks] = useState(loadData);
+
+    // This will run once the component mounts to check if data is loaded from localStorage
+    useEffect(() => {
+        const savedData = localStorage.getItem('onboardingData');
+        if (savedData) {
+            setTasks(JSON.parse(savedData)); // Update the state with the loaded data
+        }
+    }, []);
+
+    // Handle input changes and auto-save to localStorage
+    const handleInputChange = (rowIndex, colIndex, value) => {
+        const newTasks = [...tasks];
+        newTasks[rowIndex].data[colIndex] = value;
+        setTasks(newTasks);
+
+        // Save updated data to localStorage immediately
+        localStorage.setItem('onboardingData', JSON.stringify(newTasks));
+    };
+
+    // Handle Enter key press to log data to the console
+    const handleKeyDown = (e, rowIndex, colIndex) => {
+        if (e.key === 'Enter') {
+            console.log('Data:', tasks);  // Log the data to console
+        }
+    };
+
+    // Using React.createElement instead of JSX
+    return React.createElement('div', null,
+        React.createElement('table', null,
+            React.createElement('thead', null,
+                React.createElement('tr', null,
+                    React.createElement('th', { colSpan: 6, className: 'month' }, 'Month')
+                )
+            ),
+            React.createElement('tbody', null,
+                tasks.map((task, rowIndex) =>
+                    React.createElement('tr', { key: rowIndex },
+                        React.createElement('td', { className: 'my' }, task.task),
+                        task.data.map((cell, colIndex) =>
+                            React.createElement('td', { key: colIndex },
+                                React.createElement('input', {
+                                    type: 'text',
+                                    value: cell,
+                                    onChange: (e) => handleInputChange(rowIndex, colIndex, e.target.value),
+                                    onKeyDown: (e) => handleKeyDown(e, rowIndex, colIndex) // Add this line
+                                })
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+}
+
+// Render the component
+ReactDOM.render(React.createElement(OnboardingTable), document.getElementById('root'));
+
+    </script>
+
+</body>
+</html>

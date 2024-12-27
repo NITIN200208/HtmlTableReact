@@ -1,0 +1,32 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+}
+.month {
+    text-align: left;
+    margin-right: 20px;
+    
+}
+
+.my {
+    background-color: #f2f2f2;
+}
+  
